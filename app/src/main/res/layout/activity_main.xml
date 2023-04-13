@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity">
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="215dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="76dp"
+        android:ems="10"
+        android:fontFamily="casual"
+        android:hint="Search Notes"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.346"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="174dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="28dp"
+        android:text="My Notes"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.067"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:fontFamily="casual"
+        tools:textFontWeight="700" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="53dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/search_black" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="413dp"
+        android:layout_height="59dp"
+        android:background="@color/black_100"
+        android:gravity="center_vertical"
+
+        android:orientation="horizontal"
+        android:padding="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/add_white" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/image_white" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/web" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/addImgBtn"
+        android:layout_width="70dp"
+        android:layout_height="61dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.953"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/baseline_add_circle_24" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="383dp"
+        android:layout_height="526dp"
+        android:layout_marginTop="132dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
