@@ -9,8 +9,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.meebooapp.HomeFragment
 import com.example.meebooapp.R
 import com.example.meebooapp.SignInActivity
 import com.example.meebooapp.adapter.NotesAdapter
@@ -33,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        replaceFragment(HomeFragment.newInstance(),true)
+
     }
 
     //region MENU OPTIONS
@@ -53,4 +57,15 @@ class MainActivity : AppCompatActivity() {
         return true
     }
     //endregion
+
+    fun replaceFragment(fragment:Fragment, istransition:Boolean){
+        val fragmentTransition = supportFragmentManager.beginTransaction()
+
+        if (istransition){
+            fragmentTransition.setCustomAnimations(android.R.anim.slide_out_right,android.R.anim.slide_in_left)
+        }
+        fragmentTransition.add(R.id.frame_layout,fragment).addToBackStack(fragment.javaClass.simpleName).commit()
+    }
+
+
 }
