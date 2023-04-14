@@ -1,10 +1,14 @@
 package com.example.meebooapp.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
+import android.widget.EditText
 import android.widget.Toast
 import com.example.meebooapp.R
 import com.example.meebooapp.database.NotesDatabase
@@ -15,7 +19,9 @@ import java.util.*
 
 class CreateNoteActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateNoteBinding
-
+    private lateinit var inputTitle : EditText
+    private lateinit var inputSubtitle: EditText
+    private lateinit var  inputNote: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateNoteBinding.inflate(layoutInflater)
@@ -30,38 +36,34 @@ class CreateNoteActivity : AppCompatActivity() {
         binding.imageSave.setOnClickListener {
             saveNote()
         }
-    }
 
-    private fun saveNote() {
-        if (binding.editNoteTitle.text.toString().trim().isEmpty()) {
-            Toast.makeText(
-                this, "Title cannot be Empty!",
-                Toast.LENGTH_SHORT
-            ).show()
+        inputTitle = binding.editNoteTitle
+        inputSubtitle = binding.editSubtitle
+        inputNote = binding.inputNote
+
+    } // ONCREATE METHOD.
+    private fun saveNote(){
+        if(inputTitle.text.trim().toString().isEmpty()){
+            Toast.makeText(this,"Note Title cannot be blank.",Toast.LENGTH_SHORT).show()
             return
-        } else if (binding.editSubtitle.text.toString().trim().isEmpty()
-            &&
-            binding.inputNote.text.toString().isEmpty()
-        ) {
-            Toast.makeText(
-                this, "Note cannot be empty!",
-                Toast.LENGTH_SHORT
-            ).show()
+        }
+        else if (
+            inputSubtitle.text.trim().toString().isEmpty() &&
+                    inputNote.text.trim().toString().isEmpty()
+        ){
+            Toast.makeText(this,"Notes cannot be blank.",Toast.LENGTH_SHORT).show()
             return
         }
 
-        val note = Note(
-            1, // title
-            binding.editNoteTitle.text.toString(),
-            binding.editSubtitle.text.toString(),
-            binding.inputNote.text.toString(),
-            binding.txtDateNow.text.toString()
-        )
+        val notes = Note()
+        notes.title = inputTitle.text.toString()
+        notes.subTitle = inputSubtitle.text.toString()
+        notes.note_text = inputNote.text.toString()
 
         class SaveNotesTask : AsyncTask<Void, Void, Void>() {
 
             override fun doInBackground(vararg params: Void?): Void? {
-                NotesDatabase.getDatabase(applicationContext)?.notesDao()?.insertNotes(note)
+                NotesDatabase.getDatabase(applicationContext)?.notesDao()?.insertNotes(notes)
                 return null
             }
 
@@ -73,5 +75,6 @@ class CreateNoteActivity : AppCompatActivity() {
             }
         }
         SaveNotesTask().execute()
-    }
-}
+
+    }// SAVENOTE
+} // CREATENOTEACTIVITY CLASS

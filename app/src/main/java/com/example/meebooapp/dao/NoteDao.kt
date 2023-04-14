@@ -1,22 +1,21 @@
 package com.example.meebooapp.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.OnConflictStrategy
+import androidx.room.*
 import com.example.meebooapp.entities.Note
 
 
 @Dao
 interface NoteDao {
-    @Query("SELECT * FROM notes ORDER BY id DESC") // table name set.
-    fun getAllNotes(): List<Note> // entity file name
+    @Query("SELECT * FROM notes ORDER BY id DESC")
+    fun getAllNotes(): List<Note>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNotes(note: Note)
 
     @Delete
     fun deleteNotes(note: Note)
+
+    @Update
+    fun update(note: Note)
 
 }

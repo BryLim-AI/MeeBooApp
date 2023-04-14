@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity(tableName = "notes")
-data class Note (
+data class Note(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     @ColumnInfo(name = "title") var title: String? = "",
     @ColumnInfo(name = "date_time") var dateTime: String? = "",
@@ -16,7 +16,6 @@ data class Note (
     @ColumnInfo(name = "image_path") var image: String? = "",
     @ColumnInfo(name = "color") var color: String? = "",
     @ColumnInfo(name = "web_link") var webLink: String? = ""
-
 
 ) : Serializable {
     @NonNull
