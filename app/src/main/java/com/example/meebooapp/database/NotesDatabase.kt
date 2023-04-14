@@ -11,22 +11,22 @@ import com.example.meebooapp.dao.NoteDao
 @Database(entities = [Note::class], version = 1, exportSchema = false)
 abstract class NotesDatabase : RoomDatabase() {
 
-    abstract fun notesDao(): NoteDao
+
 
     companion object {
-        @Volatile
-        private var INSTANCE: NotesDatabase? = null
 
-        fun getDatabase(context: Context): NotesDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
+        var notesDatabase: NotesDatabase?= null
+        @Synchronized
+        fun getDatabase(context: Context):NotesDatabase{
+            if(notesDatabase != null){
+                notesDatabase = Room.databaseBuilder(
+                    context,
                     NotesDatabase::class.java,
-                    "notes_db"
+                    "notes.db"
                 ).build()
-                INSTANCE = instance
-                instance
             }
+            return notesDatabase!!
         }
     }
+    abstract fun notesDao(): NoteDao
 }

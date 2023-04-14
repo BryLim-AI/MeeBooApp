@@ -6,8 +6,8 @@ import com.example.meebooapp.entities.Note
 
 @Dao
 interface NoteDao {
-    @Query("SELECT * FROM notes ORDER BY id DESC")
-    fun getAllNotes(): List<Note>
+    @get:Query("SELECT * FROM notes ORDER BY id DESC")
+    val allNotes: List<Note>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNotes(note: Note)
