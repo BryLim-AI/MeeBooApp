@@ -18,7 +18,7 @@ import com.example.meebooapp.SignInActivity
 import com.example.meebooapp.adapter.NotesAdapter
 import com.example.meebooapp.database.NotesDatabase
 import com.example.meebooapp.databinding.ActivityMainBinding
-import com.example.meebooapp.entities.Note
+import com.example.meebooapp.entities.Notes
 import com.google.firebase.auth.FirebaseAuth
 
 

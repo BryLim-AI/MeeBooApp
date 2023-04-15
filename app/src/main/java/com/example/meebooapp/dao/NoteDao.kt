@@ -1,21 +1,21 @@
 package com.example.meebooapp.dao
 
 import androidx.room.*
-import com.example.meebooapp.entities.Note
+import com.example.meebooapp.entities.Notes
 
 
 @Dao
 interface NoteDao {
     @get:Query("SELECT * FROM notes ORDER BY id DESC")
-    val allNotes: List<Note>
+    val allNotes: List<Notes>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNotes(note: Note)
+    suspend  fun insertNotes(note: Notes)
 
     @Delete
-    fun deleteNotes(note: Note)
+    suspend fun deleteNotes(note: Notes) // suspend- for coroutines
 
     @Update
-    fun update(note: Note)
+    suspend fun update(note: Notes)
 
 }

@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.meebooapp.R
-import com.example.meebooapp.entities.Note
+import com.example.meebooapp.entities.Notes
 
 
-class NotesAdapter(private val notes: List<Note>) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
+class NotesAdapter(private val notes: List<Notes>) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
@@ -35,7 +35,7 @@ class NotesAdapter(private val notes: List<Note>) : RecyclerView.Adapter<NotesAd
         private val textSubtitle: TextView = itemView.findViewById(R.id.textSubTitle)
         private val textDateTime: TextView = itemView.findViewById(R.id.textDateTime)
 
-        fun setNote(note: Note) {
+        fun setNote(note: Notes) {
             textTitle.text = note.title
             if (note.subTitle?.trim()?.isEmpty() == true) {
                 textSubtitle.visibility = View.GONE
