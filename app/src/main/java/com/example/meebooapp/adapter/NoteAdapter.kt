@@ -8,41 +8,36 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.meebooapp.R
 import com.example.meebooapp.entities.Notes
 
+class NotesAdapter(val notesList: List<Notes>) :
+    RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
+        class NotesViewHolder(view:View):RecyclerView.ViewHolder(view){
 
-class NotesAdapter(private val notes: List<Notes>) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        return NoteViewHolder(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_container_note, parent, false)
-        )
-    }
-
-    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        holder.setNote(notes[position])
+        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
+      return NotesViewHolder(
+          LayoutInflater.from(parent.context).inflate(R.layout.item_recyclerview_notes,parent,false)
+      )
     }
 
     override fun getItemCount(): Int {
-        return notes.size
+       return notesList.size
     }
 
-    override fun getItemViewType(position: Int): Int {
-        return position
+    override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
+        val titleTextView = holder.itemView.findViewById<TextView>(R.id.tvTitle)
+        titleTextView.text = notesList[position].title
+
+        val titleSubTextView = holder.itemView.findViewById<TextView>(R.id.tvDesc)
+        titleSubTextView.text = notesList[position].noteText
+
+        val titleDateView = holder.itemView.findViewById<TextView>(R.id.tvDateTime)
+        titleDateView.text = notesList[position].dateTime
+
+
     }
 
-    inner class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val textTitle: TextView = itemView.findViewById(R.id.textTitle)
-        private val textSubtitle: TextView = itemView.findViewById(R.id.textSubTitle)
-        private val textDateTime: TextView = itemView.findViewById(R.id.textDateTime)
 
-        fun setNote(note: Notes) {
-            textTitle.text = note.title
-            if (note.subTitle?.trim()?.isEmpty() == true) {
-                textSubtitle.visibility = View.GONE
-            } else {
-                textSubtitle.text = note.subTitle
-            }
-            textDateTime.text = note.dateTime
-        }
-    }
+}
+class NotesViewHolder(view:View) : RecyclerView.ViewHolder(view){
+
 }

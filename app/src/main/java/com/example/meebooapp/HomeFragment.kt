@@ -5,8 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.meebooapp.adapter.NotesAdapter
+import com.example.meebooapp.database.NotesDatabase
 import com.example.meebooapp.databinding.FragmentCreateNoteBinding
 import com.example.meebooapp.databinding.FragmentHomeBinding
+import com.example.meebooapp.entities.Notes
+import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -18,6 +23,19 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+
+        launch {
+            context?.let {
+                var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
+                binding.recyclerView.adapter = NotesAdapter(notes)
+            }
+        }
+
+
+
         binding.BtnCreateNote.setOnClickListener {
             replaceFragment(CreateNoteFragment.newInstance(),true)
         }
