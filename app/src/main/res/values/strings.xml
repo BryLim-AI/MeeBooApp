@@ -11,5 +11,7 @@
     <string name="cancel">Cancel</string>
     <string name="storage_permission_text">This app needs access to your storage.</string>
     <string name="search">Search your notes</string>
+    <string name="login">Login</string>
+    <string name="login_2">Login to your Account</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
