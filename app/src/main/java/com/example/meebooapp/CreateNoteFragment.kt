@@ -5,10 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import com.example.meebooapp.database.NotesDatabase
 import com.example.meebooapp.databinding.FragmentCreateNoteBinding
 import com.example.meebooapp.entities.Notes
+import com.example.meebooapp.viewModel.CreateNoteViewModel
+import com.example.meebooapp.viewModel.MainViewModel
+import com.example.meebooapp.viewModel.MyObserver
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,12 +22,17 @@ import java.util.*
 class CreateNoteFragment : BaseFragment() {
     var currentDate:String? = null
     private var noteId = -1
-
     private lateinit var binding: FragmentCreateNoteBinding
+    private lateinit var noteTitle: EditText
+    private lateinit var noteSub: EditText
+    private lateinit var notes: EditText
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         noteId = requireArguments().getInt("noteId",-1)
+        lifecycle.addObserver(MyObserver())
+
     }
 
     override fun onCreateView(
@@ -31,6 +42,7 @@ class CreateNoteFragment : BaseFragment() {
         binding = FragmentCreateNoteBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     companion object {
         @JvmStatic
         fun newInstance() =
@@ -38,6 +50,8 @@ class CreateNoteFragment : BaseFragment() {
                 arguments = Bundle().apply {
                 }
             }
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

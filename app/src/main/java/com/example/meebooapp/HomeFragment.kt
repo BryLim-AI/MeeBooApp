@@ -6,14 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.meebooapp.adapter.NotesAdapter
 import com.example.meebooapp.database.NotesDatabase
 import com.example.meebooapp.databinding.FragmentHomeBinding
 import com.example.meebooapp.entities.Notes
+import com.example.meebooapp.viewModel.MainViewModel
+import com.example.meebooapp.viewModel.MyObserver
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 
 class HomeFragment : BaseFragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -22,7 +27,12 @@ class HomeFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+
         }
+        lifecycle.addObserver(MyObserver())
+        val viewModel by viewModels<MainViewModel> ()
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,6 +45,7 @@ class HomeFragment : BaseFragment() {
             context?.let {
                 var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
                 notesAdapter?.setData(notes)
+                arrNotes = notes as ArrayList<Notes>
                 binding.recyclerView.adapter = notesAdapter
             }
         }
@@ -45,7 +56,7 @@ class HomeFragment : BaseFragment() {
             replaceFragment(CreateNoteFragment.newInstance(),true)
         }
 
-        binding.searchView.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
+        binding.SearchViewComp.setOnQueryTextListener( object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 return true
             }
