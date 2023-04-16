@@ -4,13 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.example.meebooapp.activities.MainActivity
 import com.example.meebooapp.databinding.ActivitySignInBinding
+import com.example.meebooapp.viewModel.MainViewModel
+import com.example.meebooapp.viewModel.MyObserver
 import com.google.firebase.auth.FirebaseAuth
 
 class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
     private lateinit var firebaseAuth: FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +24,16 @@ class SignInActivity : AppCompatActivity() {
         binding.textViewSignIn.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
+        }
+        lifecycle.addObserver(MyObserver())
+        val viewModel by viewModels<MainViewModel> ()
+
+        viewModel.email.observe(this) { email ->
+            binding.emailAdd.setText(email)
+        }
+
+        viewModel.password.observe(this){password ->
+            binding.password.setText(password)
         }
 
         binding.SignUpbutton.setOnClickListener{

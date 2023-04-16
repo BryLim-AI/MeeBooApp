@@ -4,7 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.example.meebooapp.databinding.ActivitySignUpBinding
+import com.example.meebooapp.viewModel.MainViewModel
+import com.example.meebooapp.viewModel.MyObserver
 import com.google.firebase.auth.FirebaseAuth
 
 class SignUpActivity : AppCompatActivity() {
@@ -21,6 +24,21 @@ class SignUpActivity : AppCompatActivity() {
         binding.textViewSignIn.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
+        }
+
+        lifecycle.addObserver(MyObserver())
+        val viewModel by viewModels<MainViewModel> ()
+
+        viewModel.email.observe(this) { email ->
+            binding.emailAdd.setText(email)
+        }
+
+        viewModel.password.observe(this){password ->
+            binding.password.setText(password)
+        }
+
+        viewModel.confirmPassword.observe(this){cPass->
+            binding.confirmPassword.setText(cPass)
         }
 
         binding.SignUpbutton.setOnClickListener {
