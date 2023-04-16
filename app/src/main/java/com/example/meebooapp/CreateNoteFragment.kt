@@ -15,12 +15,13 @@ import java.util.*
 
 class CreateNoteFragment : BaseFragment() {
     var currentDate:String? = null
+    private var noteId = -1
+
     private lateinit var binding: FragmentCreateNoteBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
+        noteId = requireArguments().getInt("noteId",-1)
     }
 
     override fun onCreateView(
@@ -41,6 +42,19 @@ class CreateNoteFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        if(noteId != -1){
+            launch {
+                context?.let {
+                    var notes = NotesDatabase.getDatabase(it).noteDao().getSpecificNote(noteId)
+                    binding.etNoteTitle.setText(notes.title)
+                    binding.etNoteSubTitle.setText(notes.subTitle)
+                    binding.etNoteDesc.setText(notes.noteText)
+                    binding.imgNote.visibility = View.VISIBLE
+                }
+            }
+        }
 
         val dateNowFormat = SimpleDateFormat("dd/M/yyyy hh:mm:ss")
         currentDate = dateNowFormat.format(Date())
@@ -80,10 +94,6 @@ class CreateNoteFragment : BaseFragment() {
                     binding.etNoteTitle.setText("")
                     binding.etNoteSubTitle.setText("")
                     binding.etNoteDesc.setText("")
-
-                    binding.layoutImage.visibility = View.GONE
-                    binding.imgNote.visibility = View.GONE
-                    binding.tvWebLink.visibility = View.GONE
                     requireActivity().supportFragmentManager.popBackStack()
                 }
             }

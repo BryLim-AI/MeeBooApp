@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.meebooapp.adapter.NotesAdapter
 import com.example.meebooapp.database.NotesDatabase
-import com.example.meebooapp.databinding.FragmentCreateNoteBinding
 import com.example.meebooapp.databinding.FragmentHomeBinding
 import com.example.meebooapp.entities.Notes
 import kotlinx.coroutines.launch
 
 class HomeFragment : BaseFragment() {
     private lateinit var binding: FragmentHomeBinding
+    var notesAdapter: NotesAdapter= NotesAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -30,17 +31,17 @@ class HomeFragment : BaseFragment() {
         launch {
             context?.let {
                 var notes = NotesDatabase.getDatabase(it).noteDao().getAllNotes()
-                binding.recyclerView.adapter = NotesAdapter(notes)
+                notesAdapter?.setData(notes)
+                binding.recyclerView.adapter = notesAdapter
             }
         }
 
-
+        notesAdapter?.setOnClickListener(onClicked)
 
         binding.BtnCreateNote.setOnClickListener {
             replaceFragment(CreateNoteFragment.newInstance(),true)
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +57,21 @@ class HomeFragment : BaseFragment() {
                 arguments = Bundle().apply {
                 }
             }
+    }
+
+    private val onClicked = object :NotesAdapter.onItemClickedListener{
+        override fun onClicked(notesId: Int) {
+
+            var fragment:Fragment
+            var bundle=Bundle()
+            bundle.putInt("noteId",notesId)
+            fragment = CreateNoteFragment.newInstance()
+            fragment.arguments = bundle
+
+            replaceFragment(fragment,false)
+
+        }
+
     }
 
     fun replaceFragment(
