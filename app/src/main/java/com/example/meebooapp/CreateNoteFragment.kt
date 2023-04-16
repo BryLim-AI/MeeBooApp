@@ -61,12 +61,38 @@ class CreateNoteFragment : BaseFragment() {
         binding.tvDateTime.text = currentDate
 
         binding.imgDone.setOnClickListener {
-            saveNotes()
+            if(noteId != -1){
+                updateNotes()
+            }
+            else{
+                saveNotes()
+            }
         }
         binding.imgBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
+    }
+
+    private fun updateNotes(){
+        launch {
+
+//                notes.color = binding.selectedColor
+//                notes.imgPath = binding.selectedImagePath
+//                notes.webLink = binding.webLink
+            context?.let {
+                var notes = NotesDatabase.getDatabase(it).noteDao().getSpecificNote(noteId)
+                notes.title = binding.etNoteTitle.text.toString()
+                notes.subTitle = binding.etNoteSubTitle.text.toString()
+                notes.noteText = binding.etNoteDesc.text.toString()
+                notes.dateTime = currentDate
+                NotesDatabase.getDatabase(it).noteDao().updateNote(notes)
+                binding.etNoteTitle.setText("")
+                binding.etNoteSubTitle.setText("")
+                binding.etNoteDesc.setText("")
+                requireActivity().supportFragmentManager.popBackStack()
+            }
+        }
     }
     private fun saveNotes() {
         if (binding.etNoteTitle.text.isNullOrEmpty()){
