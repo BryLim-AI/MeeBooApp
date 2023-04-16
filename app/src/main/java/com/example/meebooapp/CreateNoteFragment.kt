@@ -72,14 +72,21 @@ class CreateNoteFragment : BaseFragment() {
             requireActivity().supportFragmentManager.popBackStack()
         }
 
-    }
+        binding.imgDeleteBtn.setOnClickListener {
+            DeleteNote()
+        }
 
+    }
+    private fun DeleteNote(){
+        launch {
+            context?.let{
+                NotesDatabase.getDatabase(it).noteDao().deleteSpecificNote(noteId)
+                requireActivity().supportFragmentManager.popBackStack()
+            }
+        }
+    }
     private fun updateNotes(){
         launch {
-
-//                notes.color = binding.selectedColor
-//                notes.imgPath = binding.selectedImagePath
-//                notes.webLink = binding.webLink
             context?.let {
                 var notes = NotesDatabase.getDatabase(it).noteDao().getSpecificNote(noteId)
                 notes.title = binding.etNoteTitle.text.toString()
