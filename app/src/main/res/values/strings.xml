@@ -13,5 +13,7 @@
     <string name="search">Search your notes</string>
     <string name="login">Login</string>
     <string name="login_2">Login to your Account</string>
+    <string name="Register">Register</string>
+    <string name="Register2">Register an Account</string>
     <!-- TODO: Remove or change this placeholder text -->
 </resources>
