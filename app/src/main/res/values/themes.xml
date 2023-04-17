@@ -2,20 +2,20 @@
     <!-- Base application theme. -->
     <style name="Theme.MeeBooApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="colorPrimary">@color/darkBlue</item>
+
+        <item name="colorPrimaryDark">@color/darkBlue</item>
+        <item name="colorAccent">@color/darkBlue</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
         <!-- Customize your theme here. -->
 
     </style>
     <style name="ThemeOverlay.search" parent="Theme.MeeBooApp">
-
         <!-- Text color -->
-        <item name="android:editTextColor">@color/ColorWhite</item>
+        <item name="android:editTextColor">@color/darkBlue</item>
         <!-- Hint text color -->
-        <item name="android:textColorHint">@color/ColorGray</item>
+        <item name="android:textColorHint">@color/LightBlueDark</item>
 
     </style>
 </resources>
