@@ -8,11 +8,12 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.example.meebooapp.database.NotesDatabase
 import com.example.meebooapp.databinding.FragmentCreateNoteBinding
 import com.example.meebooapp.entities.Notes
-import com.example.meebooapp.viewModel.CreateNoteViewModel
 import com.example.meebooapp.viewModel.MainViewModel
 import com.example.meebooapp.viewModel.MyObserver
 import kotlinx.coroutines.launch
@@ -27,14 +28,11 @@ class CreateNoteFragment : BaseFragment() {
     private lateinit var noteSub: EditText
     private lateinit var notes: EditText
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         noteId = requireArguments().getInt("noteId",-1)
-        lifecycle.addObserver(MyObserver())
 
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,14 +48,10 @@ class CreateNoteFragment : BaseFragment() {
                 arguments = Bundle().apply {
                 }
             }
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         if(noteId != -1){
             launch {
                 context?.let {
@@ -89,7 +83,6 @@ class CreateNoteFragment : BaseFragment() {
         binding.imgDeleteBtn.setOnClickListener {
             DeleteNote()
         }
-
     }
     private fun DeleteNote(){
         launch {
@@ -133,9 +126,6 @@ class CreateNoteFragment : BaseFragment() {
                 notes.subTitle = binding.etNoteSubTitle.text.toString()
                 notes.noteText = binding.etNoteDesc.text.toString()
                 notes.dateTime = currentDate
-//                notes.color = binding.selectedColor
-//                notes.imgPath = binding.selectedImagePath
-//                notes.webLink = binding.webLink
                 context?.let {
                     NotesDatabase.getDatabase(it).noteDao().insertNotes(notes)
                     binding.etNoteTitle.setText("")
@@ -156,5 +146,4 @@ class CreateNoteFragment : BaseFragment() {
         fragmentTransition.replace(R.id.frame_layout,fragment).addToBackStack(fragment.javaClass.simpleName).commit()
     }
 
-
-}//CREATE NOTE FRAGMENT
+}

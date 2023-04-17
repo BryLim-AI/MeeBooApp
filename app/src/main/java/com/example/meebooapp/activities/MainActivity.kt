@@ -1,29 +1,22 @@
 package com.example.meebooapp.activities
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
-import android.os.AsyncTask
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.meebooapp.HomeFragment
 import com.example.meebooapp.R
 import com.example.meebooapp.SignInActivity
-import com.example.meebooapp.adapter.NotesAdapter
-import com.example.meebooapp.database.NotesDatabase
 import com.example.meebooapp.databinding.ActivityMainBinding
-import com.example.meebooapp.entities.Notes
 import com.google.firebase.auth.FirebaseAuth
 
 
 class MainActivity : AppCompatActivity() {
-
+    private val COMMON_TAG = "OrintationChange"
     //region BINDING and FIREBASE
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var binding: ActivityMainBinding
@@ -34,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         replaceFragment(HomeFragment.newInstance(),true)
 
     }
@@ -67,5 +59,13 @@ class MainActivity : AppCompatActivity() {
         fragmentTransition.add(R.id.frame_layout,fragment).addToBackStack(fragment.javaClass.simpleName).commit()
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if(newConfig.orientation ==Configuration.ORIENTATION_LANDSCAPE){
+            Log.i(COMMON_TAG, "landscape");
+        }else if(newConfig.orientation==Configuration.ORIENTATION_PORTRAIT){
+            Log.i(COMMON_TAG, "portrait");
+        }
+    }
 
 }

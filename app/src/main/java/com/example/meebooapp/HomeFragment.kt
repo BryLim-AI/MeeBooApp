@@ -32,7 +32,6 @@ class HomeFragment : BaseFragment() {
         lifecycle.addObserver(MyObserver())
         val viewModel by viewModels<MainViewModel> ()
 
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
